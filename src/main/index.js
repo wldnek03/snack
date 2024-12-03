@@ -32,13 +32,13 @@ function MainPage() {
                         return(
                             <div className='product-card'>
                         <div>
-                            <img className='product-img' src={products.imageUrl}/>
+                        <img className='product-img' src={products.imageUrl} alt={products.name || "Product"} />
                         </div>
                         <div className='product-contents'>
                             <span className="product-name">{products.name}</span>
                             <span className='product-price'>{products.price}</span>
                             <div className='product-seller'>
-                                <img className='product-avatar' src="images/icons/avatar.png"/>
+                            <img className='product-avatar' src="images/icons/avatar.png" alt="User avatar" />
                                 <span>{products.seller}</span>
                             </div>
 
