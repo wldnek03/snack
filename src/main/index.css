@@ -1,40 +1,9 @@
-*{
-    margin:0;
-    padding:0;
-}
-#header{
-    height: 64px;
-    display: flex;
-    justify-content: center;
-    border-bottom:1px solid gray;
-}
 
-#body{
-    height: 100vh;
-    width:1024px;
-    margin: 0 auto;
-    padding-bottom: 24px;
-}
-
-#footer{
-    height:200px;
-    background-color: rgb(240, 161, 174);
-}
 
 #banner{
     height:300px;
 }
-#header-area{
-    width:1024px;
-    height:100%;
-    display:flex;
-    align-items:center;
-}
 
-#header-area >img{
-    width:210px;
-    height:60px; 
-}
 
 #banner >img{
     width:100%;

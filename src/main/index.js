@@ -18,12 +18,7 @@ function MainPage() {
         }, []);
     return (
         <>
-            <div id="header">
-                <div id="header-area">
-                    <img src="/images/icons/logo.png" alt="Logo" />
-                </div>
-            </div>
-            <div id="body">
+            <div>
                 <div id="banner">
                     <img src="/images/banners/banner1.png" alt="Banner" />
                 </div>
@@ -32,7 +27,7 @@ function MainPage() {
                     {products.map(function (products, index){
                         return(
                             <div className='product-card'>
-                                <Link className= "product-link" to={'/product/' + index}>
+                                <Link className= "product-link" to={'/product/' + products.id}>
                         <div>
                         <img className='product-img' src={products.imageUrl} alt={products.name || "Product"} />
                         </div>
@@ -51,7 +46,6 @@ function MainPage() {
                     
                 </div>
             </div>
-            <div id="footer"></div>
         </>
     );
 }
