@@ -7,31 +7,31 @@ function ProductPage() {
     const { id } = useParams();
     const [product, setProduct] = useState(null);
 
-    useEffect(function() {
+    useEffect(function(result) {
         axios
-            .get("https://c73c1209-6ef5-4199-84a7-1a77f9f71a6d.mock.pstmn.io/product/" + id)
-            .then(function(result) {
-                console.log(result.data); 
-                setProduct(result.data);
+            .get(`http://localhost:8080/products/${id}`)
+            .then(function(result){
+                setProduct(result.data.product);
             })
             .catch(function(error) {
                 console.error(error);
             });
-    }, [id]);
+    }, [id]); 
 
     if (product == null) {
         return <h1>상품 정보를 받고 있습니다...</h1>;
     }
+
     return (
         <div>
             <div id="image-box">
                 <img src={"/" + product.imageUrl} alt={product.name || "Product"} />
             </div>
             <div id="profile-box">
-                <img src="/images/icons/avatar.png" alt="avator" />
+                <img src="/images/icons/avatar.png" alt="avatar" />
                 <span>{product.seller}</span>
             </div>
-            <div id ="contents-box">
+            <div id="contents-box">
                 <div id="name">{product.name}</div>
                 <div id="price">{product.price}원</div>
                 <div id="createdAt">2024년 12월 5일</div>
