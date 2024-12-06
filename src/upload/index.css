@@ -41,3 +41,10 @@
     color:white;
     border:none;
 }
+
+#upload-img {
+    width: 200px;
+    height: 200px;
+    margin-left: 16px;
+    object-fit: contain;
+  }
