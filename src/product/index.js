@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import "./index.css";
 import { API_URL } from "../config/constants";
 import dayjs from "dayjs";
@@ -10,7 +10,8 @@ function ProductPage() {
   const { id } = useParams();
   const [products, setProduct] = useState(null);
 
-  const getProduct = () => {
+  // getProduct 함수를 useCallback으로 메모이제이션
+  const getProduct = useCallback(() => {
     axios
       .get(`${API_URL}/products/${id}`)
       .then((result) => {
@@ -19,10 +20,12 @@ function ProductPage() {
       .catch((error) => {
         console.error(error);
       });
-  };
-  useEffect(function () {
-    getProduct();
   }, [id]);
+
+  // useEffect에서 getProduct 호출
+  useEffect(() => {
+    getProduct();
+  }, [id, getProduct]);
 
   if (products === null) {
     return <h1>상품 정보를 받고 있습니다...</h1>;
@@ -39,13 +42,14 @@ function ProductPage() {
         message.error(`에러가 발생했습니다. ${error.message}`);
       });
   };
+
   return (
     <div>
       <div id="image-box">
-      <img src={`${API_URL}/${products.imageUrl}`} />
+        <img src={`${API_URL}/${products.imageUrl}`} alt="이미지 상자입니다." />
       </div>
       <div id="profile-box">
-      <img src="/images/icons/avatar.png" />
+        <img src="/images/icons/avatar.png" alt="사람 아이콘입니다." />
         <span>{products.seller}</span>
       </div>
       <div id="contents-box">
@@ -67,7 +71,7 @@ function ProductPage() {
         <pre id="description">{products.description} </pre>
       </div>
     </div>
-  ); 
+  );
 }
 
 export default ProductPage;

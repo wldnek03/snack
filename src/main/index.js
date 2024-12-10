@@ -42,7 +42,7 @@ function MainPage() {
                 <div id="banner">
                   <img
                     src={`${API_URL}/${banner.imageUrl}`}
-                    alt={`Banner ${index + 1}`}
+                    alt={`Banner ${index + 1}`} // alt 속성 추가
                   />
                 </div>
               </Link>
@@ -53,7 +53,7 @@ function MainPage() {
         <div id="product-list">
           {products.map(function (products, index) {
             return (
-              <div className="product-card">
+              <div className="product-card" key={index}>
                 {products.soldout === 1 && <div className="product-blur" />}
                 <Link
                   style={{ color: "inherit" }}
@@ -64,6 +64,7 @@ function MainPage() {
                     <img
                       className="product-img"
                       src={`${API_URL}/${products.imageUrl}`}
+                      alt={products.name} // alt 속성 추가
                     />
                   </div>
                   <div className="product-contents">
@@ -74,6 +75,7 @@ function MainPage() {
                         <img
                           className="product-avatar"
                           src="images/icons/avatar.png"
+                          alt="Seller Avatar" // alt 속성 추가
                         />
                         <span>{products.seller}</span>
                       </div>

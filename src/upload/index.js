@@ -1,6 +1,6 @@
 import { Form, Divider, Input, InputNumber, Button, Upload, message } from "antd";
 import "./index.css";
-import { ForkOutlined } from "@ant-design/icons";
+// import { ForkOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import { API_URL } from "../config/constants";
 import axios from "axios";
