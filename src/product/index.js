@@ -44,23 +44,19 @@ function ProductPage({ userNickname }) {
       .get(`${API_URL}/products/${id}/reviews`)
       .then((result) => {
         const serverReviews = result.data.reviews;
-        
         const userData = JSON.parse(localStorage.getItem(userNickname)) || {};
         const userReviews = userData.reviews || [];
         const productUserReviews = userReviews.filter(review => review.productId === id);
-        
         const allReviews = [...serverReviews, ...productUserReviews];
-        
         const uniqueReviews = allReviews.filter((review, index, self) =>
           index === self.findIndex((t) => t.id === review.id)
         );
-        
         setReviews(uniqueReviews);
       })
       .catch((error) => {
         console.error(error);
       });
-  };  
+  };
 
   const showPurchaseModal = () => {
     if (!userNickname) {
@@ -89,7 +85,6 @@ function ProductPage({ userNickname }) {
         ...userData,
         cartItems: updatedCartItems
       };
-      
       localStorage.setItem(userNickname, JSON.stringify(updatedUserData));
       message.success("장바구니에 추가되었습니다.");
     }
@@ -153,146 +148,137 @@ function ProductPage({ userNickname }) {
       </div>
       <div id="profile-box">
         <img src="/images/icons/avatar.png" alt="프로필 아이콘" />
-<span>{product.seller}</span>
-</div>
-<div id="contents-box">
-<div id="name">{product.name}</div>
-<div id="price">{product.price}원</div>
-<div id="createdAt">
-{dayjs(product.createdAt).format("YYYY년 MM월 DD일")}
-</div>
-<Button
-      id="purchase-button"
-      size="large"
-      type="primary"
-      danger
-      onClick={showPurchaseModal}
-      disabled={product.soldout === 1}
-      style={{ marginRight: "10px" }}
-    >
-      구매하기
-    </Button>
-
-    <Button
-      id="add-to-cart-button"
-      size="large"
-      type="default"
-      onClick={addToCart}
-      disabled={product.soldout === 1}
-    >
-      장바구니에 추가
-    </Button>
-
-    <div id="description-box">
-      <pre id="description">{product.description}</pre>
-    </div>
-
-    <div id="reviews-box">
-      <h2>상품 후기</h2>
-      <div id="reviews-list">
-        {reviews.map((review, index) => (
-          <div key={index} className="review-item">
-            <Rate disabled defaultValue={review.rating} />
-            <p>{review.comment}</p>
-            <p>{dayjs(review.createdAt).format("YYYY년 MM월 DD일")}</p>
-          </div>
-        ))}
+        <span>{product.seller}</span>
       </div>
-    </div>
-
-    <div>
-      <h1>추천 상품</h1>
-      <div style={{ display: "flex", flexWrap: "wrap" }}>
-        {products.map((product, index) => (
-          <ProductCard key={index} product={product} />
-        ))}
-      </div>
-    </div>
-  </div>
-
-  <Modal
-    title="상품 구매"
-    visible={isPurchaseModalVisible}
-    onCancel={() => setIsPurchaseModalVisible(false)}
-    footer={null}
-  >
-    <Form
-      form={form}
-      layout="vertical"
-      onFinish={handlePurchase}
-    >
-      <Form.Item
-        name="name"
-        label="이름"
-        rules={[{ required: true, message: '이름을 입력해주세요' }]}
-      >
-        <Input />
-      </Form.Item>
-
-      <Form.Item
-        name="phone"
-        label="전화번호"
-        rules={[{ required: true, message: '전화번호를 입력해주세요' }]}
-      >
-        <Input />
-      </Form.Item>
-
-      <Form.Item
-        name="address"
-        label="배송지"
-        rules={[{ required: true, message: '배송지를 입력해주세요' }]}
-      >
-        <Input.TextArea />
-      </Form.Item>
-
-      <Form.Item
-        name="bankAccount"
-        label={
-          <div>
-            무통장입금 계좌번호
-            <div style={{ fontSize: '14px', color: '#666' }}>
-              농협 352-1603-5711-23
-            </div>
-          </div>
-        }
-        rules={[{ required: true, message: '입금자명을 입력해주세요' }]}
-      >
-        <Input placeholder="입금자명을 입력해주세요" />
-      </Form.Item>
-
-      <Form.Item
-        name="agreement"
-        valuePropName="checked"
-        rules={[{ 
-          validator: (_, value) =>
-            value ? Promise.resolve() : Promise.reject(new Error('구매 동의가 필요합니다'))
-        }]}
-      >
-        <Checkbox>구매 정보 제공에 동의합니다</Checkbox>
-      </Form.Item>
-
-      <Form.Item>
-        <Button type="primary" htmlType="submit" block>
-          구매하기
+      <div id="contents-box">
+        <div id="name">{product.name}</div>
+        <div id="price">{product.price}원</div>
+        <div id="quantity">재고: {product.quantity}개</div>
+        <div id="createdAt">
+          {dayjs(product.createdAt).format("YYYY년 MM월 DD일")}
+        </div>
+        <Button
+          id="purchase-button"
+          size="large"
+          type="primary"
+          danger
+          onClick={showPurchaseModal}
+          disabled={product.quantity <= 0}
+          style={{ marginRight: "10px" }}
+        >
+          {product.quantity > 0 ? "구매하기" : "품절"}
         </Button>
-      </Form.Item>
-    </Form>
-  </Modal>
+        <Button
+          id="add-to-cart-button"
+          size="large"
+          type="default"
+          onClick={addToCart}
+          disabled={product.quantity <= 0}
+        >
+          장바구니에 추가
+        </Button>
+        <div id="description-box">
+          <pre id="description">{product.description}</pre>
+        </div>
+        <div id="reviews-box">
+          <h2>상품 후기</h2>
+          <div id="reviews-list">
+            {reviews.map((review, index) => (
+              <div key={index} className="review-item">
+                <Rate disabled defaultValue={review.rating} />
+                <p>{review.comment}</p>
+                <p>{dayjs(review.createdAt).format("YYYY년 MM월 DD일")}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div>
+          <h1>추천 상품</h1>
+          <div style={{ display: "flex", flexWrap: "wrap" }}>
+            {products.map((product, index) => (
+              <ProductCard key={index} product={product} />
+            ))}
+          </div>
+        </div>
+      </div>
 
-  <Modal
-    title="구매 완료"
-    visible={isCompleteModalVisible}
-    onCancel={() => setIsCompleteModalVisible(false)}
-    footer={[
-      <Button key="home" type="primary" onClick={handleComplete}>
-        홈으로 가기
-      </Button>
-    ]}
-  >
-    <p>구매가 완료되었습니다.</p>
-    <p>입금 확인 후 배송이 시작됩니다.</p>
-  </Modal>
-</div>
-);
+      <Modal
+        title="상품 구매"
+        visible={isPurchaseModalVisible}
+        onCancel={() => setIsPurchaseModalVisible(false)}
+        footer={null}
+      >
+        <Form form={form} layout="vertical" onFinish={handlePurchase}>
+          <Form.Item
+            name="name"
+            label="이름"
+            rules={[{ required: true, message: "이름을 입력해주세요" }]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            name="phone"
+            label="전화번호"
+            rules={[{ required: true, message: "전화번호를 입력해주세요" }]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            name="address"
+            label="배송지"
+            rules={[{ required: true, message: "배송지를 입력해주세요" }]}
+          >
+            <Input.TextArea />
+          </Form.Item>
+          <Form.Item
+            name="bankAccount"
+            label={
+              <div>
+                무통장입금 계좌번호
+                <div style={{ fontSize: "14px", color: "#666" }}>
+                  농협 352-1603-5711-23
+                </div>
+              </div>
+            }
+            rules={[{ required: true, message: "입금자명을 입력해주세요" }]}
+          >
+            <Input placeholder="입금자명을 입력해주세요" />
+          </Form.Item>
+          <Form.Item
+            name="agreement"
+            valuePropName="checked"
+            rules={[
+              {
+                validator: (_, value) =>
+                  value ? Promise.resolve() : Promise.reject(new Error("구매 동의가 필요합니다")),
+              },
+            ]}
+          >
+            <Checkbox>구매 정보 제공에 동의합니다</Checkbox>
+          </Form.Item>
+          <Form.Item>
+            <Button type="primary" htmlType="submit" block>
+              구매하기
+            </Button>
+          </Form.Item>
+        </Form>
+      </Modal>
+
+      <Modal
+        title="구매 완료"
+        visible={isCompleteModalVisible}
+        onCancel={() => setIsCompleteModalVisible(false)}
+        footer={[
+          <Button key="home" type="primary" onClick={handleComplete}>
+            홈으로 가기
+          </Button>,
+        ]}
+      >
+        <p>구매가 완료되었습니다.</p>
+        <p>입금 확인 후 배송이 시작됩니다.</p>
+      </Modal>
+    </div>
+  );
 }
+
 export default ProductPage;

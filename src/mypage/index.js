@@ -17,7 +17,7 @@ function MyPage({ userNickname, isLoggedIn }) {
   const [selectedItemForReview, setSelectedItemForReview] = useState(null);
   const [form] = Form.useForm();
   const navigate = useNavigate();
-
+  
   useEffect(() => {
     if (!isLoggedIn) {
       message.warning("로그인이 필요합니다.");
