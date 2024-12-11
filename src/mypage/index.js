@@ -158,15 +158,6 @@ function MyPage({ userNickname, isLoggedIn }) {
                 className="cart-item-card"
                 onClick={() => handleItemClick(item.id)}
               >
-                <button
-                  className="remove-button"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleRemoveItem(item.id);
-                  }}
-                >
-                  취소
-                </button>
                 <div id="image-box">
                   <img src={`${API_URL}/${item.imageUrl}`} alt="상품 이미지" />
                 </div>
@@ -178,6 +169,15 @@ function MyPage({ userNickname, isLoggedIn }) {
                     {item.seller}
                   </p>
                   <p className="cart-item-createdAt">{dayjs(item.createdAt).fromNow()}</p>
+                  <button
+                  className="remove-button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleRemoveItem(item.id);
+                  }}
+                >
+                  취소
+                </button>
                 </div>
               </div>
             ))}
