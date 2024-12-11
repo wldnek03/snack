@@ -116,14 +116,14 @@ function MainPage() {
               신상품
             </Link>
             <Link
-              to="/best"
+              to="/QAForm"
               style={{
                 fontSize: "16px",
                 fontWeight: "bold",
                 color: "#333",
               }}
             >
-              베스트
+              Q & A
             </Link>
             <a
               href="https://itwlsmdwjdqhrhdgkrrhk-68217.waveon.me/"
@@ -155,7 +155,7 @@ function MainPage() {
           })}
         </Carousel>
 
-        <h1 id="product-headline">판매되는 상품들</h1>
+        <h1 id="product-headline">전체 상품</h1>
         <div id="product-list">
           {products.map(function (product, index) {
             return <ProductCard product={product} key={index} />;

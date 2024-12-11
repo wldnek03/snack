@@ -7,7 +7,10 @@ import ProductPage from "./product";
 import MainPageComponent from "./main/index";
 import CategoryPage from "./category/index.js";
 import LoginPage from "./login";
-import { Button, Dropdown, Menu, message } from "antd";
+import MyPage from "./mypage";
+import NewProductsPage from "./new";
+import QAForm from "./QAForm/index.js";
+import { Button, Dropdown, Menu } from "antd";
 import { DownloadOutlined, LoginOutlined, LogoutOutlined, UserOutlined } from "@ant-design/icons";
 
 function App() {
@@ -17,15 +20,6 @@ function App() {
   const [userRole, setUserRole] = useState("");
 
   useEffect(() => {
-    // 관리자 계정 생성 (실제 환경에서는 이렇게 하지 마세요!)
-    const adminInfo = {
-      nickname: "관리자",
-      id: "1234",
-      password: "1234",
-      role: "admin"
-    };
-    localStorage.setItem("1234", JSON.stringify(adminInfo));
-
     const userToken = localStorage.getItem("userToken");
     if (userToken) {
       setIsLoggedIn(true);
@@ -54,7 +48,10 @@ function App() {
 
   const menu = (
     <Menu>
-      <Menu.Item key="1" onClick={handleLogout} icon={<LogoutOutlined />}>
+      <Menu.Item key="1" onClick={() => navigate("/mypage")} icon={<UserOutlined />}>
+        마이페이지
+      </Menu.Item>
+      <Menu.Item key="2" onClick={handleLogout} icon={<LogoutOutlined />}>
         로그아웃
       </Menu.Item>
     </Menu>
@@ -69,11 +66,7 @@ function App() {
           </Link>
           <div style={{ display: "flex", gap: "8px", marginLeft: "auto" }}>
             {isLoggedIn && isAdmin() && (
-              <Button
-                size="large"
-                onClick={() => navigate("/upload")}
-                icon={<DownloadOutlined />}
-              >
+              <Button size="large" onClick={() => navigate("/upload")} icon={<DownloadOutlined />}>
                 상품 업로드
               </Button>
             )}
@@ -84,11 +77,7 @@ function App() {
                 </Button>
               </Dropdown>
             ) : (
-              <Button
-                size="large"
-                onClick={() => navigate("/login")}
-                icon={<LoginOutlined />}
-              >
+              <Button size="large" onClick={() => navigate("/login")} icon={<LoginOutlined />}>
                 로그인
               </Button>
             )}
@@ -99,9 +88,22 @@ function App() {
         <Routes>
           <Route path="/" element={<MainPageComponent />} />
           <Route path="/category/:categoryId" element={<CategoryPage />} />
-          <Route path="/products/:id" element={<ProductPage />} />
+          <Route path="/products/:id" element={<ProductPage userNickname={userNickname} />} />
           <Route path="/upload" element={<UploadPage />} />
           <Route path="/login" element={<LoginPage setIsLoggedIn={setIsLoggedIn} />} />
+          <Route path="/mypage" element={<MyPage userNickname={userNickname} isLoggedIn={isLoggedIn} />} />
+          <Route path="/new" element={<NewProductsPage />} />
+          <Route 
+  path="/QAForm" 
+  element={
+    <QAForm 
+      isLoggedIn={isLoggedIn} 
+      userRole={userRole} 
+      userNickname={userNickname} 
+    />
+  } 
+/>
+
         </Routes>
       </div>
       <div id="footer"></div>

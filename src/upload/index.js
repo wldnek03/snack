@@ -33,7 +33,7 @@ function UploadPage() {
         })
         .then((result) => {
           console.log(result);
-          navigate(`/categories/${values.category}`); // 해당 카테고리 페이지로 이동
+          navigate(`/`); // 해당 카테고리 페이지로 이동
         })
         .catch((error) => {
           console.error(error);
