@@ -1,15 +1,26 @@
-import { Form, Divider, Input, InputNumber, Button, Upload, message } from "antd";
+import { Form, Divider, Input, InputNumber, Button, Upload, message, Select } from "antd";
 import "./index.css";
-// import { ForkOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import { API_URL } from "../config/constants";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
+const { Option } = Select;
+
 function UploadPage() {
     const [imageUrl, setImageUrl] = useState(null);
     const navigate = useNavigate();
 
+    const categories = [
+      { label: "추억의 불량식품", value: "snack" },
+      { label: "일본간식", value: "japan" },
+      { label: "중국간식", value: "china" },
+      { label: "동남아간식", value: "asia" },
+      { label: "유럽간식", value: "europe" },
+      { label: "미국간식", value: "usa" },
+      { label: "라면/컵라면", value: "ramen" },
+      { label: "음료/커피", value: "drink" }
+    ];
     const onSubmit = (values) => {
       axios
         .post(`${API_URL}/products`, {
@@ -18,10 +29,11 @@ function UploadPage() {
           seller: values.seller,
           price: parseInt(values.price),
           imageUrl: imageUrl,
+          category: values.category
         })
         .then((result) => {
           console.log(result);
-          navigate("/"); // 변경된 부분
+          navigate(`/categories/${values.category}`); // 해당 카테고리 페이지로 이동
         })
         .catch((error) => {
           console.error(error);
@@ -63,6 +75,20 @@ function UploadPage() {
                 </div>
               )}
             </Upload>
+          </Form.Item>
+          <Divider />
+          <Form.Item
+            name="category"
+            label={<div className="upload-label">카테고리</div>}
+            rules={[{ required: true, message: "카테고리를 선택해주세요" }]}
+          >
+            <Select placeholder="카테고리를 선택해주세요" size="large">
+              {categories.map(category => (
+                <Option key={category.value} value={category.value}>
+                  {category.label}
+                </Option>
+              ))}
+            </Select>
           </Form.Item>
           <Divider />
           <Form.Item
@@ -118,6 +144,6 @@ function UploadPage() {
         </Form>
       </div>
     );
-  }
-  
-  export default UploadPage;
+}
+
+export default UploadPage;
