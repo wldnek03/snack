@@ -1,0 +1,35 @@
+name: Deploy React App
+
+on:
+  push:
+    branches:
+      - jiwoo # dev 브랜치에 푸시할 때마다 실행
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Set Backend URL as Environment Variable
+        run: |
+          echo "REACT_APP_BACKEND_URL=${{ secrets.BACKEND_URL }}" >> $GITHUB_ENV
+
+      - name: Build
+        run: npm run build
+        
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build

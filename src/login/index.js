@@ -22,7 +22,7 @@ function LoginPage({ setIsLoggedIn }) {
       return;
     }
 
-    // 로그인 성공
+
     localStorage.setItem("userToken", values.id);
     localStorage.setItem("currentUser", JSON.stringify(user));
     setIsLoggedIn(true);
@@ -46,7 +46,7 @@ function LoginPage({ setIsLoggedIn }) {
       nickname: values.nickname,
       id: values.id,
       password: values.password,
-      role: "user" // 기본 역할은 'user'로 설정
+      role: "user"
     };
     
     localStorage.setItem(values.id, JSON.stringify(userInfo));

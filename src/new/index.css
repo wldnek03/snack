@@ -10,15 +10,15 @@
     margin-bottom: 20px;
   }
   .new-products-header h1 {
-    font-size: 36px; /* 글씨 크기 */
-    font-weight: 800; /* 글씨 두께 */
-    color: #333; /* 텍스트 색상 */
-    text-align: center; /* 가운데 정렬 */
-    margin-bottom: 20px; /* 아래쪽 여백 */
+    font-size: 36px; 
+    font-weight: 800; 
+    color: #333; 
+    text-align: center; 
+    margin-bottom: 20px; 
   }
   .new-products-list {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* 반응형 그리드 */
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
     gap: 16px;
   }
   
@@ -27,10 +27,10 @@
     border-radius: 8px;
     padding: 16px;
     background-color: #fff;
-    display: flex; /* 플렉스 레이아웃 추가 */
-    flex-direction: column; /* 세로 정렬 */
-    justify-content: space-between; /* 내용 간 간격 조정 */
-    text-align: left; /* 텍스트 왼쪽 정렬 */
+    display: flex; 
+    flex-direction: column; 
+    justify-content: space-between; 
+    text-align: left; 
   }
   
   .product-image {
@@ -46,9 +46,9 @@
   .product-name {
     font-size: 1.2rem;
     font-weight: bold;
-    margin-bottom: 8px; /* 일정한 간격 추가 */
+    margin-bottom: 8px;
     
-    /* 텍스트 높이 고정 및 줄바꿈 처리 */
+
     display: -webkit-box;
     -webkit-box-orient: vertical;
     overflow: hidden;
@@ -75,19 +75,19 @@
     font-size: 0.9rem;
   }
   
-  /* 텍스트 오버플로우 방지 */
+
   .product-card * {
-    word-wrap: break-word; /* 긴 단어 줄바꿈 */
+    word-wrap: break-word; 
   }
   
-  /* 카드 내부 텍스트 간격 조정 */
+
   .product-details p,
   .product-details h2 {
-    margin-bottom: 8px; /* 텍스트 간격 추가 */
+    margin-bottom: 8px; 
   }
   
-  /* 카드 높이 고정 및 스크롤 방지 */
+
   .product-card {
-    overflow: hidden; /* 내용 넘침 방지 */
+    overflow: hidden; 
   }
   

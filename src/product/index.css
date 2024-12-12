@@ -38,8 +38,8 @@
 
 #contents-box {
   padding: 16px;
-  max-width: 1200px;  /* 최대 너비 설정 */
-  margin: 0 auto;  /* 중앙 정렬 */
+  max-width: 1200px;  
+  margin: 0 auto;  
 }
 #name {
   font-size: 20px;

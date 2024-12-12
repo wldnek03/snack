@@ -20,7 +20,7 @@ function ProductCard(props){
                     <img
                       className="product-img"
                       src={`${API_URL}/${product.imageUrl}`}
-                      alt={product.name} // alt 속성 추가
+                      alt={product.name} 
                     />
                   </div>
                   <div className="product-contents">
@@ -31,7 +31,7 @@ function ProductCard(props){
                         <img
                           className="product-avatar"
                           src="/images/icons/avatar.png"
-                          alt="Seller Avatar" // alt 속성 추가
+                          alt="Seller Avatar" 
                         />
                         <span>{product.seller}</span>
                       </div>

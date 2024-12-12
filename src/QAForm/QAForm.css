@@ -1,4 +1,4 @@
-/* 전체 컨테이너 */
+
 .qa-container {
   max-width: 800px;
   margin: auto;
@@ -6,16 +6,16 @@
   font-family: "Arial", sans-serif;
   color: #333;
 }
-/* Q&A 제목 스타일 */
+
 .qa-container h1 {
-  font-size: 36px; /* 글씨 크기 */
-  font-weight: 800; /* 글씨 두께 */
-  color: #333; /* 텍스트 색상 */
-  text-align: center; /* 가운데 정렬 */
-  margin-bottom: 20px; /* 아래쪽 여백 */
+  font-size: 36px; 
+  font-weight: 800; 
+  color: #333;
+  text-align: center;
+  margin-bottom: 20px; 
 }
 
-/* 문의 등록 버튼 */
+
 .register-btn {
   background-color: #007bff;
   color: white;
@@ -31,7 +31,6 @@
   background-color: #0056b3;
 }
 
-/* 질문 목록 */
 .questions-list {
   margin-top: 20px;
 }
@@ -50,7 +49,6 @@
   margin-top: 5px;
 }
 
-/* 답변 섹션 */
 .reply-section textarea {
   width: calc(100% - 20px);
   padding: 10px;
@@ -73,7 +71,6 @@
   background-color: #218838;
 }
 
-/* 답변 스타일 */
 .reply {
   margin-top: 10px;
 }
@@ -82,38 +79,35 @@
   color: #007bff;
 }
 
-/* 팝업 오버레이 */
 .popup-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* 반투명 배경 */
+  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000; /* 다른 요소 위에 표시 */
+  z-index: 1000; 
 }
 
-/* 팝업 창 */
+
 .popup {
-  background-color: #ffffff; /* 흰색 배경 */
-  padding: 30px; /* 내부 여백 */
-  border-radius: 10px; /* 둥근 모서리 */
-  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2); /* 부드러운 그림자 */
-  max-width: 400px; /* 최대 너비 */
-  width: calc(100% - 40px); /* 화면 크기에 따라 유동적 */
+  background-color: #ffffff; 
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2); 
+  max-width: 400px;
+  width: calc(100% - 40px); 
 }
 
-/* 팝업 제목 */
 .popup h2 {
   font-size: 20px;
   margin-bottom: 20px;
-  color: #333333; /* 제목 색상 */
+  color: #333333; 
 }
 
-/* 폼의 라벨 */
 .popup form label {
   display: block;
   font-size: 14px;
@@ -121,22 +115,20 @@
   margin-bottom: 8px;
 }
 
-/* 입력 필드 스타일 */
 .popup form input,
 .popup form textarea,
 .popup form select {
   width: calc(100% - 20px);
   padding: 10px;
   margin-bottom: 15px;
-  border-radius: 5px; /* 둥근 모서리 */
-  border: none; /* 테두리 제거 */
-  background-color: #f9f9f9; /* 밝은 배경색 */
+  border-radius: 5px; 
+  border: none;
+  background-color: #f9f9f9;
 }
 
 .popup form textarea {
-  resize: none; /* 크기 조절 비활성화 */
+  resize: none;
 }
 
-/* 버튼 컨테이너 (정렬 및 간격 추가) */
 .popup form .button-container {
     display:flex;justify-content :space-between;}

@@ -7,21 +7,21 @@ const QAForm = ({ isLoggedIn, userRole }) => {
     return savedQuestions ? JSON.parse(savedQuestions) : [];
   });
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const [editingIndex, setEditingIndex] = useState(null); // 수정 중인 항목의 인덱스
+  const [editingIndex, setEditingIndex] = useState(null);
   const [formData, setFormData] = useState({
     title: "",
     content: "",
     type: "환불",
     isPrivate: false,
   });
-  const [replyData, setReplyData] = useState(""); // 답변 데이터
+  const [replyData, setReplyData] = useState("");
 
-  // 현재 로그인된 사용자 정보 가져오기
+
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-  const userId = currentUser?.id; // 로그인된 사용자의 ID
-  const isAdmin = currentUser?.role === "admin"; // 관리자 여부 확인
+  const userId = currentUser?.id; 
+  const isAdmin = currentUser?.role === "admin"; 
 
-  // localStorage에 데이터 저장
+
   useEffect(() => {
     localStorage.setItem("questions", JSON.stringify(questions));
   }, [questions]);
@@ -41,13 +41,13 @@ const QAForm = ({ isLoggedIn, userRole }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (editingIndex !== null) {
-      // 수정 모드
+
       const updatedQuestions = [...questions];
       updatedQuestions[editingIndex] = { ...formData, userId };
       setQuestions(updatedQuestions);
       setEditingIndex(null);
     } else {
-      // 새 문의 등록
+
       setQuestions([...questions, { ...formData, userId, reply: "" }]);
     }
     setFormData({ title: "", content: "", type: "환불", isPrivate: false });
@@ -73,16 +73,15 @@ const QAForm = ({ isLoggedIn, userRole }) => {
       return;
     }
     const updatedQuestions = [...questions];
-    updatedQuestions[index].reply = replyData; // 답변 추가
+    updatedQuestions[index].reply = replyData; 
     setQuestions(updatedQuestions);
-    setReplyData(""); // 답변 입력 필드 초기화
+    setReplyData(""); 
   };
 
   return (
     <div className="qa-container">
       <h1>Q&A</h1>
 
-      {/* 로그인 여부 확인 */}
       {isLoggedIn ? (
         <button className="register-btn" onClick={() => setIsPopupOpen(true)}>
           문의 등록하기
@@ -106,7 +105,6 @@ const QAForm = ({ isLoggedIn, userRole }) => {
             </p>
             <span>문의 유형: {question.type}</span>
 
-            {/* 작성자 또는 관리자만 수정/삭제 가능 */}
             {(question.userId === userId || isAdmin) && (
               <div className="actions">
                 <button onClick={() => handleEdit(index)}>수정</button>
@@ -114,7 +112,6 @@ const QAForm = ({ isLoggedIn, userRole }) => {
               </div>
             )}
 
-            {/* 답변 섹션 */}
             {isAdmin && (
               <div className="reply-section">
                 <textarea
@@ -126,7 +123,6 @@ const QAForm = ({ isLoggedIn, userRole }) => {
               </div>
             )}
 
-            {/* 답변 표시 */}
             {question.reply && (
               <div className="reply">
                 <strong>관리자 답변:</strong>
@@ -141,7 +137,6 @@ const QAForm = ({ isLoggedIn, userRole }) => {
         ))}
       </div>
 
-      {/* 팝업 */}
       {isPopupOpen && (
         <div className="popup-overlay">
           <div className="popup">

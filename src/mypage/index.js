@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { message, Modal, Form, Input, Rate, Button } from "antd";
+import { message } from "antd";
 import "./MyPage.css";
 import dayjs from "dayjs";
 import { API_URL } from "../config/constants";
-import axios from "axios";
 
 function MyPage({ userNickname, isLoggedIn }) {
   const [cartItems, setCartItems] = useState([]);
@@ -13,9 +12,6 @@ function MyPage({ userNickname, isLoggedIn }) {
   const [zipcode, setZipcode] = useState("");
   const [savedAddress, setSavedAddress] = useState(null);
   const [isEditingAddress, setIsEditingAddress] = useState(false);
-  const [isReviewModalVisible, setIsReviewModalVisible] = useState(false);
-  const [selectedItemForReview, setSelectedItemForReview] = useState(null);
-  const [form] = Form.useForm();
   const navigate = useNavigate();
   
   useEffect(() => {
@@ -70,34 +66,6 @@ function MyPage({ userNickname, isLoggedIn }) {
     localStorage.setItem(userNickname, JSON.stringify(updatedUserData));
     setCartItems(updatedCartItems);
     message.success("상품이 장바구니에서 삭제되었습니다.");
-  };
-
-  const handleReviewClick = (item) => {
-    setSelectedItemForReview(item);
-    setIsReviewModalVisible(true);
-  };
-
-  const handleReviewSubmit = async (values) => {
-    try {
-      const response = await axios.post(`${API_URL}/products/${selectedItemForReview.id}/reviews`, {
-        ...values,
-        userId: userNickname,
-      });
-      message.success("후기가 등록되었습니다.");
-      setIsReviewModalVisible(false);
-      form.resetFields();
-      
-      const userData = JSON.parse(localStorage.getItem(userNickname)) || {};
-      const userReviews = userData.reviews || [];
-      const newReview = {
-        ...response.data.review,
-        productId: selectedItemForReview.id
-      };
-      userData.reviews = [...userReviews, newReview];
-      localStorage.setItem(userNickname, JSON.stringify(userData));
-    } catch (error) {
-      message.error("후기 등록 중 오류가 발생했습니다.");
-    }
   };
 
   return (
@@ -170,14 +138,14 @@ function MyPage({ userNickname, isLoggedIn }) {
                   </p>
                   <p className="cart-item-createdAt">{dayjs(item.createdAt).fromNow()}</p>
                   <button
-                  className="remove-button"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleRemoveItem(item.id);
-                  }}
-                >
-                  취소
-                </button>
+                    className="remove-button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleRemoveItem(item.id);
+                    }}
+                  >
+                    취소
+                  </button>
                 </div>
               </div>
             ))}
@@ -192,10 +160,7 @@ function MyPage({ userNickname, isLoggedIn }) {
         {purchasedItems.length > 0 ? (
           <div className="purchased-grid">
             {purchasedItems.map((item, index) => (
-              <div
-                key={index}
-                className="purchased-item-card"
-              >
+              <div key={index} className="purchased-item-card">
                 <div id="image-box" onClick={() => handleItemClick(item.id)}>
                   <img src={`${API_URL}/${item.imageUrl}`} alt="상품 이미지" />
                 </div>
@@ -209,12 +174,6 @@ function MyPage({ userNickname, isLoggedIn }) {
                   <p className="purchased-item-date">
                     구매일: {dayjs(item.purchaseDate).format('YYYY년 MM월 DD일')}
                   </p>
-                  <button
-                    className="review-button"
-                    onClick={() => handleReviewClick(item)}
-                  >
-                    후기 작성
-                  </button>
                 </div>
               </div>
             ))}
@@ -223,27 +182,6 @@ function MyPage({ userNickname, isLoggedIn }) {
           <p>구매한 제품이 없습니다.</p>
         )}
       </section>
-
-      <Modal
-        title="후기 작성"
-        visible={isReviewModalVisible}
-        onCancel={() => setIsReviewModalVisible(false)}
-        footer={null}
-      >
-        <Form form={form} onFinish={handleReviewSubmit}>
-          <Form.Item name="rating" label="평점" rules={[{ required: true, message: '평점을 선택해주세요' }]}>
-            <Rate />
-          </Form.Item>
-          <Form.Item name="comment" label="후기" rules={[{ required: true, message: '후기를 작성해주세요' }]}>
-            <Input.TextArea rows={4} />
-          </Form.Item>
-          <Form.Item>
-            <Button type="primary" htmlType="submit">
-              후기 등록
-            </Button>
-          </Form.Item>
-        </Form>
-      </Modal>
     </div>
   );
 }
