@@ -21,6 +21,15 @@ function App() {
   const [isMenuVisible, setIsMenuVisible] = useState(false);
 
   useEffect(() => {
+    // Create an admin account (not recommended for production)
+    const adminInfo = {
+      nickname: "관리자",
+      id: "1234",
+      password: "1234",
+      role: "admin"
+    };
+    localStorage.setItem("1234", JSON.stringify(adminInfo));
+
     const userToken = localStorage.getItem("userToken");
     if (userToken) {
       setIsLoggedIn(true);
@@ -77,59 +86,59 @@ function App() {
             <img src="/images/icons/logo.png" alt="Logo" />
           </Link>
           <div className="nav-area" style={{
-          backgroundColor: "#fffff",
-          padding: "10px 0",
-          borderBottom: "1px solid #fffff"
-        }}>
-          <div style={{
-            maxWidth: "1000px",
-            margin: "0 auto",
-            display: "flex",
-            alignItems: "center",
-            gap: "70px"
+            backgroundColor: "#fffff",
+            padding: "10px 0",
+            borderBottom: "1px solid #fffff"
           }}>
-            <div style={{ position: "relative" }}>
-              <Button
-                icon={<MenuOutlined />}
-                size="large"
-                style={{
-                  backgroundColor: "#3F93CC",
-                  color: "white"
-                }}
-                onClick={() => setIsMenuVisible(!isMenuVisible)}
+            <div style={{
+              maxWidth: "1000px",
+              margin: "0 auto",
+              display: "flex",
+              alignItems: "center",
+              gap: "70px"
+            }}>
+              <div style={{ position: "relative" }}>
+                <Button
+                  icon={<MenuOutlined />}
+                  size="large"
+                  style={{
+                    backgroundColor: "#3F93CC",
+                    color: "white"
+                  }}
+                  onClick={() => setIsMenuVisible(!isMenuVisible)}
+                >
+                  전체 카테고리
+                </Button>
+                {isMenuVisible && (
+                  <Menu style={{
+                    position: "absolute",
+                    top: "100%",
+                    left: 0,
+                    width: "200px",
+                    zIndex: 1000,
+                    backgroundColor: "white",
+                    boxShadow: "0 2px 8px rgba(0,0,0,0.15)"
+                  }}>
+                    {categories.map((category, index) => (
+                      <Menu.Item key={index}>
+                        <Link to={category.link}>{category.title}</Link>
+                      </Menu.Item>
+                    ))}
+                  </Menu>
+                )}
+              </div>
+              <Link to="/new" style={{ fontSize: "16px", color: "#333", textDecoration: "none" }}>신상품</Link>
+              <Link to="/QAForm" style={{ fontSize: "16px", color: "#333", textDecoration: "none" }}>Q & A</Link>
+              <a
+                href="https://itwlsmdwjdqhrhdgkrrhk-68217.waveon.me/"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ fontSize: "16px", color: "#333", textDecoration: "none" }}
               >
-                전체 카테고리
-              </Button>
-              {isMenuVisible && (
-                <Menu style={{
-                  position: "absolute",
-                  top: "100%",
-                  left: 0,
-                  width: "200px",
-                  zIndex: 1000,
-                  backgroundColor: "white",
-                  boxShadow: "0 2px 8px rgba(0,0,0,0.15)"
-                }}>
-                  {categories.map((category, index) => (
-                    <Menu.Item key={index}>
-                      <Link to={category.link}>{category.title}</Link>
-                    </Menu.Item>
-                  ))}
-                </Menu>
-              )}
+                mbti
+              </a>
             </div>
-            <Link to="/new" style={{ fontSize: "16px", color: "#333", textDecoration: "none" }}>신상품</Link>
-            <Link to="/QAForm" style={{ fontSize: "16px", color: "#333", textDecoration: "none" }}>Q & A</Link>
-            <a
-              href="https://itwlsmdwjdqhrhdgkrrhk-68217.waveon.me/"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ fontSize: "16px", color: "#333", textDecoration: "none" }}
-            >
-              mbti
-            </a>
           </div>
-        </div>
           <div style={{ display: "flex", gap: "8px", marginLeft: "auto" }}>
             {isLoggedIn && isAdmin() && (
               <Button size="large" onClick={() => navigate("/upload")} icon={<DownloadOutlined />}>
@@ -161,16 +170,15 @@ function App() {
           <Route path="/mypage" element={<MyPage userNickname={userNickname} isLoggedIn={isLoggedIn} />} />
           <Route path="/new" element={<NewProductsPage />} />
           <Route 
-  path="/QAForm" 
-  element={
-    <QAForm 
-      isLoggedIn={isLoggedIn} 
-      userRole={userRole} 
-      userNickname={userNickname} 
-    />
-  } 
-/>
-
+            path="/QAForm" 
+            element={
+              <QAForm 
+                isLoggedIn={isLoggedIn} 
+                userRole={userRole} 
+                userNickname={userNickname} 
+              />
+            } 
+          />
         </Routes>
       </div>
       <div id="footer"></div>
